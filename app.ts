@@ -5,8 +5,9 @@ import dotenv from "dotenv";
 import path from "path";
 import morgan from "morgan";
 import { createStream, RotatingFileStream } from "rotating-file-stream";
-import initAppRoutes from "./src/routes/init.routes";
+import initRoutes from "./src/routes/init.routes";
 import database from "./src/configs/db.configs";
+import log from "./src/logs/log";
 
 dotenv.config();
 database.connectDatabase();
@@ -25,8 +26,8 @@ app.use(isProduction ? morgan("combined", { stream: accessLogStream }) : morgan(
 app.use(cors());
 app.use(express.json());
 
-initAppRoutes(app);
+initRoutes(app);
 
 app.listen(port, () => {
-  console.log(`Server running port ${port}`);
+  log.info(`Server running port ${port}`);
 });

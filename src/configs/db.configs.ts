@@ -1,8 +1,10 @@
+import log from "../logs/log";
+
 const mongoose = require("mongoose");
 
 const connectDatabase = async () => {
   const mongoDbUrl = process.env.MONGO_DB_URL;
-  console.log(`Connecting to ${mongoDbUrl}`);
+  log.info(`Connecting to ${mongoDbUrl}`);
   mongoose.Promise = global.Promise;
 
   mongoose
@@ -11,10 +13,10 @@ const connectDatabase = async () => {
       useUnifiedTopology: true,
     })
     .then(() => {
-      console.log("Successfully connected to the database");
+      log.info("Successfully connected to the database");
     })
     .catch((err: any) => {
-      console.log(`Could not connect to the database. Exiting now ... \n${err}`);
+      log.error(`Could not connect to the database. Exiting now ... \n${err}`);
     });
 };
 export default { connectDatabase };
