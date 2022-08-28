@@ -10,7 +10,6 @@ import database from "./src/configs/db.configs";
 import log from "./src/logs/log";
 
 dotenv.config();
-database.connectDatabase();
 
 const port: string | number = process.env.PORT || 3001;
 const isProduction: boolean = process.env.NODE_ENV === "production";
@@ -25,9 +24,10 @@ const accessLogStream: RotatingFileStream = createStream("access.log", {
 app.use(isProduction ? morgan("combined", { stream: accessLogStream }) : morgan("dev"));
 app.use(cors());
 app.use(express.json());
-
-initRoutes(app);
+app.use(express.urlencoded({ extended: false }));
 
 app.listen(port, () => {
   log.info(`Server running port ${port}`);
+  database.connectDatabase();
+  initRoutes(app);
 });

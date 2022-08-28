@@ -1,9 +1,10 @@
-import { Application, Request, Response } from "express";
+import { Application } from "express";
+import { login } from "../controllers/auth.controller";
+import validate from "../middlewares/validate.middlewares";
+import { loginSchema } from "../schema/auth.schema";
 
 const initRoutes = (app: Application) => {
-  app.get("/", (req: Request, res: Response) => {
-    res.send("Hello world");
-  });
+  app.post("/api/v1/login", validate(loginSchema), login);
 };
 
 export default initRoutes;
