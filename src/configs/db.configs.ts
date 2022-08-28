@@ -17,5 +17,4 @@ const connectDatabase = async () => {
       console.log(`Could not connect to the database. Exiting now ... \n${err}`);
     });
 };
-
-module.exports = { connectDatabase };
+export default { connectDatabase };

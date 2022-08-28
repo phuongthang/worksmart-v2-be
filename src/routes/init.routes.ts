@@ -6,4 +6,4 @@ const initAppRoutes = (app: Application) => {
   });
 };
 
-module.exports = initAppRoutes;
+export default initAppRoutes;

@@ -5,9 +5,8 @@ import dotenv from "dotenv";
 import path from "path";
 import morgan from "morgan";
 import { createStream, RotatingFileStream } from "rotating-file-stream";
-
-const initAppRoutes = require("./src/routes/route");
-const database = require("./src/configs/db.configs");
+import initAppRoutes from "./src/routes/init.routes";
+import database from "./src/configs/db.configs";
 
 dotenv.config();
 database.connectDatabase();
