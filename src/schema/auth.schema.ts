@@ -6,3 +6,9 @@ export const loginSchema = object({
     email: string().email("Sai định dạng Email").required("Email là mục bắt buộc !"),
   }),
 });
+
+export const loginCodeSchema = object({
+  body: object({
+    loginCode: string().required("Mã xác thực là mục bắt buộc !").min(4, "Mật khẩu phải có ít nhất 4 kí tự !"),
+  }),
+});
