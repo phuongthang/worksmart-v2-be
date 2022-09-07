@@ -2,6 +2,7 @@ import { omit } from "lodash";
 import log from "../logs/log";
 import Accounts, { IAccounts } from "../models/accounts.models";
 import { generatorCode } from "../utils/auth.utils";
+import { sendMailWithLoginTemplate } from "../utils/mail.utils";
 import { comparePassword } from "../utils/password.utils";
 
 export async function verifyAccount(email: string, password: string) {
@@ -14,8 +15,14 @@ export async function verifyAccount(email: string, password: string) {
     if (!isVerify) {
       return false;
     }
-    account.loginCode = generatorCode();
+
+    const loginCode = generatorCode();
+    account.loginCode = loginCode;
     account.save();
+
+    const mailTo = account.email;
+    await sendMailWithLoginTemplate(mailTo, loginCode);
+
     return omit(account.toJSON(), "password", "loginCode");
   } catch (e) {
     log.error(e);
