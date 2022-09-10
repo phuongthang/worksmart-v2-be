@@ -7,6 +7,7 @@ export interface IAccounts extends mongoose.Document {
   email: string;
   password: string;
   loginCode: string;
+  passwordCode: string;
   role: string;
   fullName: string;
   avatar: string;
@@ -25,6 +26,7 @@ const Account = new Schema(
     email: { type: String },
     password: { type: String },
     loginCode: { type: String },
+    passwordCode: { type: String },
     role: { type: Number },
     fullName: { type: String },
     avatar: { type: String },

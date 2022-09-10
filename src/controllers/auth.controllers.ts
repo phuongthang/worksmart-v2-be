@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import log from "../logs/log";
-import { compareLoginCode, verifyAccount } from "../services/accounts.services";
+import { verifyAccountAndGeneratorCode, verifyLoginCode } from "../services/auth.services";
 import { generatorAccessToken } from "../utils/auth.utils";
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password } = req.body;
-    const account = await verifyAccount(email, password);
+    const account = await verifyAccountAndGeneratorCode(email, password);
 
     if (!account) {
       return res.status(401).json({
@@ -40,7 +40,7 @@ export async function verifyCode(req: Request | any, res: Response, next: NextFu
     const { loginCode } = req.body;
     const { data } = req.data;
 
-    const account = await compareLoginCode(data.email, loginCode);
+    const account = await verifyLoginCode(data.email, loginCode);
     if (!account) {
       return res.status(401).json({
         code: 401,
